@@ -19,7 +19,8 @@ class ShopFront extends GeneralController
     }
 
     public function getProductApi(){
-        $result = ProductApi::getProductList();
+        // $result = ProductApi::getProductList();
+        $result = ProductApi::getCategoryList();
         return json_encode($result);
     }
 

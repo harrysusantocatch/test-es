@@ -21,4 +21,19 @@ class ProductApi {
         }
         return $response;
     }
+
+    public static function getCategoryList(){
+        $result = TokenApi::getToken();
+        $status = $result->status;
+        if($status == '200'){
+            $token = $result->token;
+            $url = "https://staging-api-pro.outletz.id/api/category_list/?parent_id=";
+            $client = new Client(['headers' => ['Authorization' => $token]]);
+            $request = $client->get($url);
+            $response = json_decode($request->getBody());
+        }else{
+            $response = $result;
+        }
+        return $response;
+    }
 }
