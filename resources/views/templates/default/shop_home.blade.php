@@ -8,28 +8,17 @@
                     <div class="product-image-wrapper product-single">
                       <div class="single-products product-box-{{ $product_new->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ $product_new->getUrl() }}"><img src="{{ asset($product_new->getThumb()) }}" alt="{{ $product_new->name }}" /></a>
-                            {!! $product_new->showPrice() !!}
-                            <a href="{{ $product_new->getUrl() }}"><p>{{ $product_new->name }}</p></a>
+                            <a href="{{ $product_new->image }}"><img src="{{ $product_new->image }}" alt="{{ $product_new->name }}" height="180" width="150" /></a>
+                            {!! $product_new->sell_price !!}
+                            <a href="{{ $product_new->image }}"><p>{{ $product_new->name }}</p></a>
 
-                            @if ($product_new->allowSale())
+                            @if (true)
                              <a class="btn btn-default add-to-cart" onClick="addToCartAjax('{{ $product_new->id }}','default')"><i class="fa fa-shopping-cart"></i>{{trans('front.add_to_cart')}}</a>
                             @else
                               &nbsp;
                             @endif
-
                           </div>
-                      @if ($product_new->price != $product_new->getFinalPrice() && $product_new->kind != SC_PRODUCT_GROUP)
-                      <img src="{{ asset($templateFile.'/images/home/sale.png') }}" class="new" alt="" />
-                      @elseif($product_new->type == SC_PRODUCT_NEW)
                       <img src="{{ asset($templateFile.'/images/home/new.png') }}" class="new" alt="" />
-                      @elseif($product_new->type == SC_PRODUCT_HOT)
-                      <img src="{{ asset($templateFile.'/images/home/hot.png') }}" class="new" alt="" />
-                      @elseif($product_new->kind == SC_PRODUCT_BUILD)
-                      <img src="{{ asset($templateFile.'/images/home/bundle.png') }}" class="new" alt="" />
-                      @elseif($product_new->kind == SC_PRODUCT_GROUP)
-                      <img src="{{ asset($templateFile.'/images/home/group.png') }}" class="new" alt="" />
-                      @endif
                       </div>
                       <div class="choose">
                         <ul class="nav nav-pills nav-justified">
@@ -55,28 +44,16 @@
                     <div class="product-image-wrapper product-single">
                       <div class="single-products   product-box-{{ $product_hot->id }}">
                           <div class="productinfo text-center">
-                            <a href="{{ $product_hot->getUrl() }}"><img src="{{ asset($product_hot->getThumb()) }}" alt="{{ $product_hot->name }}" /></a>
-                            {!! $product_hot->showPrice() !!}
-                            <a href="{{ $product_hot->getUrl() }}"><p>{{ $product_hot->name }}</p></a>
-                            @if ($product_hot->allowSale())
+                            <a href="{{ $product_hot->image }}"><img src="{{ $product_hot->image }}" alt="{{ $product_hot->name }}" height="180" width="150"/></a>
+                            {!! $product_hot->sell_price !!}
+                            <a href="{{ $product_hot->image }}"><p>{{ $product_hot->name }}</p></a>
+                            @if (true)
                              <a class="btn btn-default add-to-cart" onClick="addToCartAjax('{{ $product_hot->id }}','default')"><i class="fa fa-shopping-cart"></i>{{trans('front.add_to_cart')}}</a>
                             @else
                               &nbsp;
                             @endif
                           </div>
-
-                      @if ($product_hot->price != $product_hot->getFinalPrice() && $product_hot->kind != SC_PRODUCT_GROUP)
-                      <img src="{{ asset($templateFile.'/images/home/sale.png') }}" class="new" alt="" />
-                      @elseif($product_hot->type == SC_PRODUCT_NEW)
-                      <img src="{{ asset($templateFile.'/images/home/new.png') }}" class="new" alt="" />
-                      @elseif($product_hot->type == SC_PRODUCT_HOT)
                       <img src="{{ asset($templateFile.'/images/home/hot.png') }}" class="new" alt="" />
-                      @elseif($product_hot->kind == SC_PRODUCT_BUILD)
-                      <img src="{{ asset($templateFile.'/images/home/bundle.png') }}" class="new" alt="" />
-                      @elseif($product_hot->kind == SC_PRODUCT_GROUP)
-                      <img src="{{ asset($templateFile.'/images/home/group.png') }}" class="new" alt="" />
-                      @endif
-
                       </div>
                       <div class="choose">
                         <ul class="nav nav-pills nav-justified">
@@ -86,7 +63,7 @@
                       </div>
                     </div>
                   </div>
-                @if ($key % 3 == 2 || $key+1 == $products_hot->count())
+                @if ($key % 3 == 2 || $key+1 == count($products_hot))
                   </div>
                 @endif
                @endforeach

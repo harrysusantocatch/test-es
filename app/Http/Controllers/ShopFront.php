@@ -18,9 +18,9 @@ class ShopFront extends GeneralController
         parent::__construct();
     }
 
-    public function getProductApi(){
-        // $result = ProductApi::getProductList();
-        $result = ProductApi::getCategoryList();
+    public function getProductApi(Request $request){
+        $result = ProductApi::getProductList($request);
+        // $result = ProductApi::getCategoryList();
         return json_encode($result);
     }
 
@@ -30,11 +30,17 @@ class ShopFront extends GeneralController
      */
     public function index(Request $request)
     {
+        $categories = ProductApi::getCategoryList($request)->data->data;
+        $product_new = ProductApi::getProductList($request, 'latest')->data->data;
+        $product_hot = ProductApi::getProductList($request, "best_selling")->data->data;
         return view($this->templatePath . '.shop_home',
             array(
-                'products_new' => (new ShopProduct)->getProducts($type = null, $limit = sc_config('product_new'), $opt = null),
-                'products_hot' => (new ShopProduct)->getProducts($type = SC_PRODUCT_HOT, $limit = sc_config('product_hot'), $opt = 'random'),
-                'categories' => (new ShopCategory)->getCategoriesAll($onlyActive = true),
+                'products_new' => $product_new,
+                'products_hot' => $product_hot,
+                'categories' => $categories,
+                // 'products_new' => (new ShopProduct)->getProducts($type = null, $limit = sc_config('product_new'), $opt = null),
+                // 'products_hot' => (new ShopProduct)->getProducts($type = SC_PRODUCT_HOT, $limit = sc_config('product_hot'), $opt = 'random'),
+                // 'categories' => (new ShopCategory)->getCategoriesAll($onlyActive = true),
                 'products_build' => (new ShopProduct)->getTopBuild($limit = 4),
                 'products_group' => (new ShopProduct)->getTopGroup($limit = 4),
                 'layout_page' => 'home',

@@ -20,8 +20,8 @@ class TokenApi {
     public static function getToken(){
         $url = "https://staging-api-pro.outletz.id/api/token";
         $fields = [
-            'username' => 'admin',
-            'password' => 'sBp49fYSLleV'
+            'username' => env('TOKEN_USERNAME'),
+            'password' => env('TOKEN_PASSWORD')
         ];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(

@@ -1,50 +1,40 @@
-  @php
-    $modelCategory = (new \App\Models\ShopCategory);
-    $categories = $modelCategory->getCategoriesAll($onlyActive = true);
-    $categoriesTop = $modelCategory->getCategoriesTop();
-  @endphp
-  @if ($categoriesTop->count())
-              <h2>{{ trans('front.categories') }}</h2>
-              <div class="panel-group category-products" id="accordian">
-              @foreach ($categoriesTop as $key =>  $category)
-                @if (!empty($categories[$category->id]))
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="#accordian" href="#{{ $key }}">
-                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                      </a>
-                      <a href="{{ $category->getUrl() }}">  {{ $category->name }}</a>
-                    </h4>
-                  </div>
-                  <div id="{{ $key }}" class="panel-collapse collapse">
-                    <div class="panel-body">
-                      <ul>
-                        @foreach ($categories[$category->id] as $cateChild)
-                            <li>
-                                - <a href="{{ $cateChild->getUrl() }}">{{ $cateChild->name }}</a>
-                                <ul>
-                                  @if (!empty($categories[$cateChild->id]))
-                                    @foreach ($categories[$cateChild->id] as $cateChild2)
-                                        <li>
-                                            -- <a href="{{ $cateChild2->getUrl() }}">{{ $cateChild2->name }}</a>
-                                        </li>
-                                    @endforeach
-                                  @endif
-                                </ul>
-                            </li>
-                        @endforeach
-                      </ul>
+
+<h2>{{ trans('front.categories') }}</h2>
+<div class="panel-group category-products" id="accordian">
+  @foreach ($categories as $category)
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordian" href="#{{ $category->id }}">
+            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+          </a>
+          <a href="">  {{ $category->name }}</a>
+        </h4>
+      </div>
+      <div id="{{ $category->id }}" class="panel-collapse collapse">
+        <div class="panel-body">
+          <ul>
+            @foreach ($category->childs as $cateChild)
+                <li>
+                    <a data-toggle="collapse" href="#{{ $cateChild->id }}">
+                      <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                    </a>
+                    - <a href="">{{ $cateChild->name }}</a>
+                    <div id="{{ $cateChild->id }}" class="collapse">
+                        <ul>
+                            @foreach ($cateChild->childs as $cateChild2)
+                                <li>
+                                    -- <a href="">{{ $cateChild2->name }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
-                  </div>
-                </div>
-                @else
-                  <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <a href="{{ $category->getUrl() }}"><h4 class="panel-title"><a href="{{ $category->getUrl() }}">{{ $category->name }}</a></h4></a>
-                    </div>
-                  </div>
-               @endif
+                </li>
             @endforeach
-              </div>
-  @endif
+          </ul>
+        </div>
+      </div>
+    </div>
+  @endforeach
+</div>
+
